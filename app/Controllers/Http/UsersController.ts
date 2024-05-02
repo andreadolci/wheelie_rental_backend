@@ -9,7 +9,7 @@ export default class UsersController {
 
   public async store({ request, response }: HttpContextContract) {
 
-    const data = request.only(['name', 'surname', 'email', 'gender', 'password', 'birth_date'])
+    const data = request.only(['name', 'surname', 'email', 'password', 'birth_date'])
 
     const user = await User.create(data)
 
@@ -29,7 +29,7 @@ export default class UsersController {
 
     if (picture?.isValid) {
       await picture.moveToDisk('./')
-      loggedUser.picture = "http://localhost/adonis-jac-progetto/tmp/uploads/" + picture.fileName
+      loggedUser.profileImg = "http://localhost/adonis-jac-progetto/tmp/uploads/" + picture.fileName
     }
 
     loggedUser.name = request.input('name')
