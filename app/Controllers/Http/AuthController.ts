@@ -3,13 +3,18 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 export default class AuthController {
 
   public async login({ request, response, auth }: HttpContextContract) {
-    const email = request.input('email')
+    const username = request.input('username')
     const password = request.input('password')
 
+    console.log({ username, password, auth });
+
     try {
-      const token = await auth.attempt(email, password, {
+      const token = await auth.attempt(username, password, {
         expiresIn: "365day"
       })
+
+      console.log({ token });
+
 
       const user = auth.use('api').user
 
@@ -18,7 +23,7 @@ export default class AuthController {
       })
 
     } catch (error) {
-      return response.status(400).send('Le credenziali non sono valide')
+      return response.status(400).send(error.message)
     }
 
   }
