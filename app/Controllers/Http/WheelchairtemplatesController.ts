@@ -10,4 +10,10 @@ export default class WheelchairtemplatesController {
 
         return periodicals
     }
+
+    async show({ params }: HttpContextContract) {
+        const id = params.id
+        const cat = await Wheelchairtemplate.findOrFail(id)
+        return cat
+    }
 }
