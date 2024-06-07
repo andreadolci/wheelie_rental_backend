@@ -25,7 +25,7 @@ Route.group(() => {
   // users/:id
   Route.resource('users', 'UsersController')
 
-  Route.resource('periodicals', 'PeriodicalsController')
+  Route.resource('wheelchairtemplate', 'WheelchairtemplatesController')
 
   Route.get('search/:text', 'ArticlesController.search')
 
