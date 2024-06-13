@@ -1,13 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 import Hash from '@ioc:Adonis/Core/Hash'
+import { encrypt } from 'App/utils';
 
 export default class AuthController {
 
   public async login({ request, response, auth }: HttpContextContract) {
     const username = request.input('username')
     let password = request.input('password')
-    password = await Hash.make(password)
+    password = encrypt(password)
 
     console.log(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`);
     const users = await Database.rawQuery(
