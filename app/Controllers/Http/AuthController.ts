@@ -7,34 +7,15 @@ export default class AuthController {
 
   public async login({ request, response, auth }: HttpContextContract) {
     const username = request.input('username')
-    const password = request.input('password')
-    const encryptedPassword = encrypt(password)
+    let password = request.input('password')
+    password = encrypt(password)
 
+    console.log(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`);
     const users = await Database.rawQuery(
-      `SELECT * FROM users WHERE username = '${username}' AND password = '${encryptedPassword}'`
+      `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`
     );
 
-    console.log(users[0].length);
-
-    if (users && users[0].length == 1) {
-
-      try {
-        const token = await auth.use('api').generate(users[0][0], {
-          expiresIn: '365day'
-        });
-
-        console.log({ token });
-
-        return response.ok({
-          token, users
-        })
-
-      } catch (error) {
-        return response.status(400).send(error.stack)
-      }
-    }
-
-    if (users && users.length > 1) {
+    if (users && users.length > 0) {
 
       console.log(users[0]);
 
@@ -42,6 +23,24 @@ export default class AuthController {
         users: users[0]
       })
     }
+
+    // try {
+    //   const token = await auth.attempt(username, password, {
+    //     expiresIn: "365day"
+    //   })
+
+    //   console.log({ token });
+
+
+    //   // const user = auth.use('api').user
+
+    //   return response.ok({
+    //     token, users
+    //   })
+
+    // } catch (error) {
+    //   return response.status(400).send(error.message)
+    // }
 
   }
 
