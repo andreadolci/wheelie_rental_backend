@@ -29,6 +29,8 @@ Route.group(() => {
 
   Route.get('search/:text', 'ArticlesController.search')
 
+  Route.post('wheelchair/instance/:templateId/:userId', 'WheelchairsController.instanceFrom')
+
   Route.resource('subscriptions', 'SubscriptionsController')
 
   Route.resource('categories', 'CategoriesController')
