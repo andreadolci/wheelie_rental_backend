@@ -17,7 +17,21 @@ export default class WheelchairsController {
             userId: params.userId
 
         }
+        wheelChair.quantity -= 1
+        wheelChair.save()
         const createdChair = await Wheelchair.create(chairToCreate)
         return createdChair
+    }
+
+    async index({ }: HttpContextContract) {
+        const chairs = await Wheelchair.all()
+        return chairs
+    }
+
+    async myChairs({params}: HttpContextContract){
+        const chairs = await Wheelchair.query().where('user_id', params.userId)
+        console.log(chairs);
+        
+        return chairs
     }
 }
