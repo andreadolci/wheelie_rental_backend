@@ -34,7 +34,7 @@ export default class WheelchairsController {
                 userId: params.userId
 
             }
-            wheelChair.quantity += 1
+            
         }
         wheelChair.quantity -= 1
         wheelChair.save()
