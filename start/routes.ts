@@ -25,11 +25,15 @@ Route.group(() => {
   // users/:id
   Route.resource('users', 'UsersController')
 
+  Route.get('wheelchairs/outofstock', 'WheelchairtemplatesController.outOfStock')
+
   Route.resource('wheelchairs', 'WheelchairsController')
 
+  Route.get('wheelchairs/storic/:userId', 'WheelchairsController.purchasedChairs')
+  
   Route.resource('wheelchairtemplate', 'WheelchairtemplatesController')
 
-  Route.get('search/:text', 'ArticlesController.search')
+  Route.get('search/:text', 'WheelchairtemplatesController.search')
 
   Route.get('wheelchair/:userId', 'WheelchairsController.myChairs')
 

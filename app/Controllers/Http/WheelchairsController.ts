@@ -4,7 +4,7 @@ import Wheelchairtemplate from 'App/Models/Wheelchairtemplate'
 import { StatusEnum } from 'App/utils/enum'
 
 export default class WheelchairsController {
-    async buy({ params }: HttpContextContract) {
+    async buy({ params, response }: HttpContextContract) {
         const chairId = params.templateId
         const wheelChair = await Wheelchairtemplate.findOrFail(chairId)
 
@@ -36,6 +36,10 @@ export default class WheelchairsController {
             }
 
         }
+        if (wheelChair.quantity <= 0) {
+            return response.status(404)
+
+        }
         wheelChair.quantity -= 1
         wheelChair.save()
         const createdChair = await Wheelchair.create(chairToCreate)
@@ -53,8 +57,9 @@ export default class WheelchairsController {
 
         return chairs
     }
-    async purchasedChairs({ params }: HttpContextContract) {
-        const chairs = await Wheelchair.query().where('user_id', params.userId).andWhere('buy_or_rent', true)
+    async purchasedChairs({ params, auth }: HttpContextContract) {
+        const user = auth.use('api').user
+        const chairs = await Wheelchair.query().where('user_id', user!.id).andWhere('buy_or_rent', true)
 
         return chairs
     }
@@ -67,20 +72,19 @@ export default class WheelchairsController {
     async confirm({ params }: HttpContextContract) {
         const chairs = await Wheelchair.query().where('user_id', params.userId).andWhere('is_purchased', false)
 
-
         await Promise.all(chairs.map(async chair => {
-            console.log(chair);
 
             chair.isPurchased = true
             chair.save()
 
         }))
+
     }
 
     async destroy({ params }: HttpContextContract) {
         const chairId = params.id
 
-        const chair = await Wheelchair.findByOrFail( 'id', chairId)
+        const chair = await Wheelchair.findByOrFail('id', chairId)
 
         await chair.delete()
 
