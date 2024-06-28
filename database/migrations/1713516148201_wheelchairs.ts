@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.string('url')
       table.string('status')
       table.boolean('is_purchased')
+      table.boolean('rent_or_buy')
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
 
       table.dateTime('created_at', { useTz: true })
