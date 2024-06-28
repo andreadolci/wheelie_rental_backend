@@ -25,13 +25,23 @@ Route.group(() => {
   // users/:id
   Route.resource('users', 'UsersController')
 
+  Route.get('wheelchairs/outofstock', 'WheelchairtemplatesController.outOfStock')
+
+  Route.resource('wheelchairs', 'WheelchairsController')
+
+  Route.get('wheelchairs/storic/:userId', 'WheelchairsController.purchasedChairs')
+  
   Route.resource('wheelchairtemplate', 'WheelchairtemplatesController')
 
-  Route.get('search/:text', 'ArticlesController.search')
+  Route.get('search/:text', 'WheelchairtemplatesController.search')
 
-  Route.resource('subscriptions', 'SubscriptionsController')
+  Route.get('wheelchair/:userId', 'WheelchairsController.myChairs')
 
-  Route.resource('categories', 'CategoriesController')
+  Route.post('wheelchair/instance/:templateId/:userId/:rentOrBuy', 'WheelchairsController.buy')
+
+  Route.post('wheelchair/confirm/:userId', 'WheelchairsController.confirm')
+
+
 
 }).middleware(['auth'])
 

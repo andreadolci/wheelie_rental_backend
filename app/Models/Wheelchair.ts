@@ -24,6 +24,9 @@ export default class Wheelchair extends BaseModel {
 
   @column()
   public isPurchased: boolean
+  
+  @column()
+  public rentOrBuy: boolean
 
   @column()
   public userId: number

@@ -16,4 +16,15 @@ export default class WheelchairtemplatesController {
         const cat = await Wheelchairtemplate.findOrFail(id)
         return cat
     }
+
+    async outOfStock({params}:HttpContextContract){
+        const wheelChair=Wheelchairtemplate.query().where("quantity", 0)
+        return wheelChair
+    }
+    async search({params}:HttpContextContract){
+        const text = params.text
+        const search=Wheelchairtemplate.query().where("name",text)
+        return search
+    }
+
 }
