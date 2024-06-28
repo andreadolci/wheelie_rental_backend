@@ -31,7 +31,9 @@ Route.group(() => {
 
   Route.get('wheelchair/:userId', 'WheelchairsController.myChairs')
 
-  Route.post('wheelchair/instance/:templateId/:userId', 'WheelchairsController.instanceFrom')
+  Route.post('wheelchair/instance/:templateId/:userId/:rentOrBuy', 'WheelchairsController.buy')
+
+  Route.post('wheelchair/confirm/:userId', 'WheelchairsController.confirm')
 
   Route.resource('subscriptions', 'SubscriptionsController')
 
