@@ -26,7 +26,7 @@ export default class WheelchairsController {
             chairToCreate = {
                 name: wheelChair.name,
                 description: wheelChair.description,
-                price: wheelChair.price,
+                price: wheelChair.price / 5,
                 url: wheelChair.url,
                 status: StatusEnum.TODELIVER,
                 isPurchased: false, // da fare diventare true all'acquisto così puliamo il carrello
