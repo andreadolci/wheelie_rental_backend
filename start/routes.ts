@@ -41,9 +41,7 @@ Route.group(() => {
 
   Route.post('wheelchair/confirm/:userId', 'WheelchairsController.confirm')
 
-  Route.resource('subscriptions', 'SubscriptionsController')
 
-  Route.resource('categories', 'CategoriesController')
 
 }).middleware(['auth'])
 
