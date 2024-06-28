@@ -10,7 +10,7 @@ export default class WheelchairsController {
 
         let chairToCreate = {}
 
-        if (params.rentOrBuy === 1) {
+        if (params.rentOrBuy == 1) {
             chairToCreate = {
                 name: wheelChair.name,
                 description: wheelChair.description,
@@ -49,6 +49,16 @@ export default class WheelchairsController {
     async myChairs({ params }: HttpContextContract) {
         const chairs = await Wheelchair.query().where('user_id', params.userId).andWhere('is_purchased', false)
         console.log(chairs);
+
+        return chairs
+    }
+    async purchasedChairs({ params }: HttpContextContract) {
+        const chairs = await Wheelchair.query().where('user_id', params.userId).andWhere('buy_or_rent', true)
+
+        return chairs
+    }
+    async rentedChairs({ params }: HttpContextContract) {
+        const chairs = await Wheelchair.query().where('user_id', params.userId).andWhere('buy_or_rent', false)
 
         return chairs
     }
