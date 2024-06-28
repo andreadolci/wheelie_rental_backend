@@ -34,7 +34,7 @@ export default class WheelchairsController {
                 userId: params.userId
 
             }
-            
+
         }
         wheelChair.quantity -= 1
         wheelChair.save()
@@ -75,5 +75,14 @@ export default class WheelchairsController {
             chair.save()
 
         }))
+    }
+
+    async destroy({ params }: HttpContextContract) {
+        const chairId = params.id
+
+        const chair = await Wheelchair.findByOrFail( 'id', chairId)
+
+        await chair.delete()
+
     }
 }
